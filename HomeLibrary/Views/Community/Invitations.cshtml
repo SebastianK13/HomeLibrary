@@ -1,0 +1,42 @@
+﻿@model List<HomeLibrary.Models.Invitations>
+
+<div id="users-view" class="users-view-content">
+    @using (Html.BeginForm("Friends", "Community", FormMethod.Post, new { id = "Search-form", enctype = "multipart/form-data" }))
+    {
+
+    }
+    <div id="users-search" class="users-list">
+        <div class="friend-list-header">
+            <div class="space-button"></div>
+            <div id="friends-btn" class="friends-button">
+                Friends
+            </div>
+            <div class="space-button"></div>
+            <div id="invs-btn" class="invitations-button">
+                Invitations
+            </div>
+            <div class="space-button"></div>
+        </div>
+        @using (Html.BeginForm("Invitations", "Community", FormMethod.Post, new { id = "invitationForm" }))
+        {
+            foreach (var f in Model)
+            {
+                if (!f.Accept)
+                {
+                    <div class="user" value=@f.InvitationID>
+                        <div class="user-picture" style="background-image: url('@Url.Content("~/Images/" + f.Sender.ProfilePic)" )')"></div>
+                        <div class="user-info">
+                            <label class="user-info-name">@f.Sender.Nickname</label>
+                            <label class="user-info-loc">@f.Sender.City</label>
+                        </div>
+                        <div class="add-friend-btn-container">
+                            <div id="acc-inv" class="accept-inv-btn">Accept</div>
+                            <div id="dec-inv" class="decline-inv-btn">Decline</div>
+                        </div>
+                    </div>
+                }
+            }
+            <input type="hidden" name="invID" />
+        }
+    </div>
+</div>

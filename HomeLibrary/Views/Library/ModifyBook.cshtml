@@ -1,0 +1,196 @@
+﻿@using HomeLibrary
+@model dynamic
+@*@model HomeLibrary.Models.BookLocation*@
+@*@model HomeLibrary.Models.BookDetail*@
+
+@{
+    string imgSource;
+    if (ViewBag.SourceIMG == null)
+    {
+        imgSource = Model.Book.ImageSource;
+    }
+    else
+    {
+        imgSource = ViewBag.SourceIMG;
+    }
+}
+
+<div id="SinglePageContent" class="body-content-blank">
+    <div class="library-view-content">
+        <div id="right-panel" class="right-panel-section">
+            <div class="library-navbar">
+                <div class="library-navbar-header">
+                    <p>Category</p>
+                    <img id="close-navbar" src="~/Images/leave_btn.png" />
+                </div>
+                <ul class="library-navbar-list">
+                    <li>
+                        <img src="@Url.Content("~/Images/menu_arrow.png")" />
+                        <a href="/Library/ManageBooks">All books</a>
+                    </li>
+                    <li>
+                        <img src="@Url.Content("~/Images/menu_arrow.png")" />
+                        <a href="/Library/BorrowedBooks">Borrowed books</a>
+                    </li>
+                    <li>
+                        <img src="@Url.Content("~/Images/menu_arrow.png")" />
+                        <a href="/Library/LendBooks">Lend books</a>
+                    </li>
+                    <li>
+                        <img src="@Url.Content("~/Images/menu_arrow.png")" />
+                        <a href="/Library/AvailableBooks">Available - own only</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div id="navbar-open" class="close-navbar-button">
+            Open
+        </div>
+        <div id="left-panel" class="left-panel-section">
+            @using (Html.BeginForm("ModifyBook", "Library", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="left-panel-content">
+                    <div class="header-add-book">Modify book</div>
+                    @*<div class="left-panel-container">*@
+                    <div class="left-panel-left-side">
+                        <div class="left-panel-left-side-content">
+                            <ul>
+                                @Html.AntiForgeryToken()
+                                <li>
+                                    <div class="left-panel-label-inline">
+                                        @Html.Label("Title")
+                                    </div>
+                                    <div class="left-panel-left-textbox">
+                                        <input class="form-control" type="text" value="@Model.Book.Title" readonly />
+                                    </div>
+                                    <div class="left-panel-left-textbox">
+                                        <input name="Title" class="form-control" type="text" value="@ViewBag.FormFields[0]" />
+
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="left-panel-label-inline">
+                                        @Html.Label("Category")
+                                    </div>
+                                    <div class="left-panel-left-textbox">
+                                        <input class="form-control" type="text" value="@Model.Book.Category" readonly />
+                                    </div>
+                                    <div class="left-panel-left-textbox">
+                                        <input name="Category" class="form-control" type="text" value="@ViewBag.FormFields[1]" />
+
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="left-panel-label-inline">
+                                        @Html.Label("Author")
+                                    </div>
+                                    <div class="left-panel-left-textbox">
+                                        <input class="form-control" type="text" value="@Model.Book.Author" readonly />
+                                    </div>
+                                    <div class="left-panel-left-textbox">
+                                        <input name="Author" class="form-control" type="text" value="@ViewBag.FormFields[2]" />
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="left-panel-label-inline">
+                                        @Html.Label("Language")
+                                    </div>
+                                    <div class="left-panel-left-textbox">
+                                        <input class="form-control" type="text" value="@Model.Book.Language" readonly />
+                                    </div>
+                                    <div class="left-panel-left-textbox">
+                                        <input name="Language" class="form-control" type="text" value="@ViewBag.FormFields[3]" />
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="left-panel-label-inline">
+                                        @Html.Label("Pages")
+                                    </div>
+                                    <div class="left-panel-left-textbox">
+                                        <input class="form-control" type="text" value="@Model.Book.Pages" readonly />
+                                    </div>
+                                    <div class="left-panel-left-textbox">
+                                        <input name="Pages" class="form-control" type="text" value="@ViewBag.FormFields[4]" />
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="left-panel-label-inline">
+                                        @Html.Label("Bookstand Designation")
+                                    </div>
+                                    <div class="left-panel-left-textbox">
+                                        <input class="form-control" type="text" value="@Model.Location.BookstandDesignation" readonly />
+                                    </div>
+                                    <div class="left-panel-left-textbox">
+                                        <input name="BookstandDesignation" class="form-control" type="text" value="@ViewBag.FormFields[5]" />
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="left-panel-label-inline">
+                                        @Html.Label("Shelf number")
+                                    </div>
+                                    <div class="left-panel-left-textbox">
+                                        <input class="form-control" type="text" value="@Model.Location.ShelfNumber" readonly />
+                                    </div>
+                                    <div class="left-panel-left-textbox">
+                                        <input name="ShelfNumber" class="form-control" type="text" value="@ViewBag.FormFields[6]" />
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="left-panel-label-inline">
+                                        @Html.Label("Book Position")
+                                    </div>
+                                    <div class="left-panel-left-textbox">
+                                        <input class="form-control" type="text" value="@Model.Location.BookPosition" readonly />
+                                    </div>
+                                    <div class="left-panel-left-textbox">
+                                        <input name="BookPosition" class="form-control" type="text" value="@ViewBag.FormFields[7]" />
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="left-panel-label-inline">
+                                        @Html.Label("Description")
+                                    </div>
+                                    <div class="left-panel-left-textbox">
+                                        <input class="form-control" type="text" value="@Model.Book.Description" readonly />
+                                    </div>
+                                    <div class="left-panel-left-textbox">
+                                        <input name="Description" class="form-control" type="text" value="@ViewBag.FormFields[8]" />
+                                        <input name="BookID" class="form-control" type="hidden" value="@ViewBag.BookID" />
+                                        <input name="ImageSource" class="form-control" type="hidden" value="@ViewBag.SourceIMG" />
+                                    </div>
+                                </li>
+
+                            </ul>
+                            <div class="error">
+                                @Html.ValidationSummary(false, "", new { @class = "error" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="left-panel-right-side">
+                        <div class="left-panel-right-side-content">
+                            @*@using (Html.BeginForm("AddPhoto", "Library", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                {*@
+                            <div class="add-photo">
+                                <img id="book-img" src="@Url.Content("~/Images/"+ViewBag.SourceIMG)" alt="Book image" />
+                            </div>
+                            <label class="button-mask">
+                                <input type='file' name='file' id="add-book-btn" />
+                                Change image
+                            </label>
+
+                            @*}*@
+                        </div>
+                    </div>
+                    <div class="accept-buttons">
+                        <ul>
+                            <li class="button-add-book">
+                                <input type="submit" class="btn btn-reg" value="Modify" />
+                                <a href="/Library/ManageBooks" class="btn btn-green">Leave</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

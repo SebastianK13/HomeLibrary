@@ -1,0 +1,19 @@
+﻿@model HomeLibrary.Models.BasicProfileInfoModels
+<div id="profile-view" class="profile-view-content">
+    <div id="profile-head" class="head-profile" style="background-image: url('@Url.Content("~/Images/" + Model.BackgroundPic)" )')" value=@Model.BackgroundPic>
+        <div id="profile-mask" class="profile-head-mask"></div>
+        <div id="profile-photo" class="photo-profile" style="background-image: url('@Url.Content("~/Images/" + Model.ProfilePic)" )')" value=@Model.ProfilePic>
+        </div>
+        <label class="nickname-profile">@Model.Nickname</label>
+    </div>
+    <div class="head-profile-bottom">
+        <ul class="profile-navbar">
+            <li class="profile-navbar-li"><a href="/Community/FriendsPictures?profileID=@Model.ProfileID">Photos</a></li>
+            <li class="profile-navbar-li"><a href="/Community/FriendsInformations?profileID=@Model.ProfileID">Informations</a></li>
+            <li class="profile-navbar-li"><a href="/Community/FriendsUserList?profileID=@Model.ProfileID">Friends</a></li>
+        </ul>
+    </div>
+    <div id="profile-body" class="corpse-profile">
+
+    </div>
+</div>

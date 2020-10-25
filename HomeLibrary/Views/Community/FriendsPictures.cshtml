@@ -1,0 +1,41 @@
+﻿@using HomeLibrary
+@model dynamic
+    <div id="profile-view" class="profile-view-content">
+        <div id="profile-head" class="head-profile" style="background-image: url('@Url.Content("~/Images/" + Model.Profile.BackgroundPic)" )')" value=@Model.Profile.BackgroundPic>
+            <div id="profile-mask" class="profile-head-mask"></div>
+            <div id="profile-photo" class="photo-profile" style="background-image: url('@Url.Content("~/Images/" + Model.Profile.ProfilePic)" )')" value=@Model.Profile.ProfilePic>
+            </div>
+            <label class="nickname-profile">@Model.Profile.Nickname</label>
+        </div>
+        <div class="head-profile-bottom">
+            <ul class="profile-navbar">
+                <li class="profile-navbar-li"><a href="/Community/FriendsPictures?profileID=@Model.Profile.ProfileID">Photos</a></li>
+                <li class="profile-navbar-li"><a href="/Community/FriendsInformations?profileID=@Model.Profile.ProfileID">Informations</a></li>
+                <li class="profile-navbar-li"><a href="/Community/FriendsUserList?profileID=@Model.Profile.ProfileID">Friends</a></li>
+            </ul>
+        </div>
+        <div id="profile-body" class="corpse-profile">
+            <div class="left-panel-content">
+                <div id="photos-id" class="photos">
+                    @if (Model.Pictures != null && Model.Pictures.Count > 0)
+                    {
+                        foreach (var p in Model.Pictures)
+                        {
+                            <div class="single-photo">
+                                <div class="photo-container">
+                                    <div class="single-photo-img" id=@p.PictureID value=@p.PicturePath style="background-image: url('@Url.Content("~/Images/" + p.PicturePath)" )')" name="notclicked"></div>
+                                </div>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <p class="empty-info">Empty</p>
+                    }
+                </div>
+                <div class="error">
+                    @Html.ValidationSummary(false, "", new { @class = "error" })
+                </div>
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,104 @@
+﻿@using HomeLibrary.Models
+@model dynamic
+@{
+    List<SelectListItem> ListItem = ViewBag.BookList;
+}
+<div id="SinglePageContent" class="body-content-blank">
+    <div class="library-view-content">
+        <div id="right-panel" class="right-panel-section">
+            <div class="library-navbar">
+                <div class="library-navbar-header">
+                    <p>Category</p>
+                    <img id="close-navbar" src="~/Images/leave_btn.png" />
+                </div>
+                <ul class="library-navbar-list">
+                    <li>
+                        <img src="@Url.Content("~/Images/menu_arrow.png")" />
+                        <a href="/Library/ManageBooks">All books</a>
+                    </li>
+                    <li>
+                        <img src="@Url.Content("~/Images/menu_arrow.png")" />
+                        <a href="/Library/BorrowedBooks">Borrowed books</a>
+                    </li>
+                    <li>
+                        <img src="@Url.Content("~/Images/menu_arrow.png")" />
+                        <a href="/Library/LendBooks">Lend books</a>
+                    </li>
+                    <li>
+                        <img src="@Url.Content("~/Images/menu_arrow.png")" />
+                        <a href="/Library/AvailableBooks">Available - own only</a>
+                    </li>
+                </ul>
+                <div class="sort-section">
+                    <div class="action-header">
+                        <p>Actions</p>
+                    </div>
+                    <ul class="library-navbar-list">
+                        <li>
+                            <img src="@Url.Content("~/Images/menu_arrow.png")" />
+                            <a href="/Library/TransactionOffers">Transaction offers</a>
+                        </li>
+                        <li>
+                            <img src="@Url.Content("~/Images/menu_arrow.png")" />
+                            <a href="/Library/SwapTransactions">My transactions</a>
+                        </li>
+                        <li>
+                            <img src="@Url.Content("~/Images/menu_arrow.png")" />
+                            <a href="/Library/SwapBook">New transaction</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="filtr-section">
+                    <div class="filter-header">
+                        <p>Filtr</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="navbar-open" class="close-navbar-button">
+            Open
+        </div>
+        <div id="left-panel" class="left-panel-section">
+            <div class="left-panel-content">
+                @using (Html.BeginForm("SwapTransaction", "Library", FormMethod.Post, new { id = "SwapT-form", enctype = "multipart/form-data" }))
+                {
+                    <div class="books-swap sT">
+                        <div id="offerSwapT" class="swap-book-info" value="@Model.Transaction.SwapView[0].SwapID">
+                            <div class="book-container">
+                                <div class="single-book-img">
+                                    <img id="SwapBookIMG" src="@Url.Content("~/Images/" + Model.Transaction.SwapView[0].Source)">
+                                </div>
+                                <div class="book-informations bInfoH">
+                                    <p id="SwapBookTitle" class="book-title">@Model.Transaction.SwapView[0].Title</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="Confirm" class="SwapTConfirm"></div>
+                        <div id="BookToSwapT" class="single-book swap">
+                            <div class="book-container">
+                                <div class="single-book-img hideDiv">
+                                    <img id="SwapBookIMGT" />
+                                </div>
+                                <div class="book-informations hideDiv">
+                                    <p id="SwapBookTitleT" class="book-title"></p>
+                                </div>
+                                <div class="single-book-label tLabelHeight">
+                                    @Html.DropDownList("ProposeID",
+                                    ListItem.Default("- - - - -Select book- - - - -", "-1")
+                                    , new { onchange = "FillSwapTransactionBI(obj)" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" name="SwapID" id="SwapID"/>
+                }
+                <div class="error">
+                    @Html.ValidationSummary(false, "", new { @id = "ErrorsSection", @class = "error" })
+                </div>
+                <script type="text/javascript">
+                    var obj= @Html.Raw(Json.Encode(Model.Books));
+                </script>
+            </div>
+        </div>
+    </div>
+</div>

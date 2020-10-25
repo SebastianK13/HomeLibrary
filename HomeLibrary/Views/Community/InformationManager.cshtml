@@ -1,0 +1,148 @@
+﻿@model HomeLibrary.Models.BasicProfileInfoModels
+
+<div id="SinglePageContent" class="body-content-blank">
+    <div class="library-view-content">
+        <div id="right-panel" class="right-panel-section">
+            <div class="library-navbar">
+                <div class="library-navbar-header">
+                    <p>Category</p>
+                    <img id="close-navbar" src="~/Images/leave_btn.png" />
+                </div>
+                <ul class="library-navbar-list">
+                    <li>
+                        <img src="@Url.Content("~/Images/menu_arrow.png")" />
+                        <a href="/Community/InformationManager">Change profile informations</a>
+                    </li>
+                    <li>
+                        <img src="@Url.Content("~/Images/menu_arrow.png")" />
+                        <a href="/Library/BorrowedBooks">Change account informations</a>
+                    </li>
+                    <li>
+                        <img src="@Url.Content("~/Images/menu_arrow.png")" />
+                        <a href="/Library/LendBooks">Block users</a>
+                    </li>
+                    <li>
+                        <img src="@Url.Content("~/Images/menu_arrow.png")" />
+                        <a href="/Community/PicturesProfile">Manage pictures</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div id="navbar-open" class="close-navbar-button">
+            Open
+        </div>
+        <div id="left-panel" class="left-panel-section">
+            @using (Html.BeginForm("InformationManager", "Community", FormMethod.Post, new { id = "editProfile", enctype = "multipart/form-data" }))
+            {
+                <div class="left-panel-content">
+                    <div class="header-add-book">Change profile informations</div>
+                    <div class="right-panel-manage">
+                        <div class="right-panel-content-manage">
+                            <ul id="profile-info-list" class="profile-info">
+                                @Html.AntiForgeryToken()
+                                <li id="Nickname-li">
+                                    <div class="left-panel-left-label profile-field-name">
+                                        @Html.Label("Nickname")
+                                    </div>
+                                    @if (Model.Nickname == null)
+                                    {
+                                        <div class="left-panel-book-field profile-field-value">
+                                            <p class="profile-info-field">unknown</p>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="left-panel-book-field profile-field-value">
+                                            <p class="profile-info-field">@Model.Nickname</p>
+                                        </div>
+                                    }
+                                    <div name="Nickname-btn" id="Nickname-btn" class="left-panel-book-field profile-info-btn" value="@Model.Nickname">
+                                        Edit
+                                    </div>
+                                </li>
+                                <li id="Age-li">
+                                    <div class="left-panel-left-label profile-field-name">
+                                        @Html.Label("Age")
+                                    </div>
+                                    @if (Model.Age == 0)
+                                    {
+                                        <div class="left-panel-book-field profile-field-value">
+                                            <p class="profile-info-field">unknown</p>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="left-panel-book-field profile-field-value">
+                                            <p class="profile-info-field">@Model.Age</p>
+                                        </div>
+                                    }
+                                    <div id="Age-btn" class="left-panel-book-field profile-info-btn" value="@Model.Age">
+                                        Edit
+                                    </div>
+                                </li>
+                                <li id="Country-li">
+                                    <div class="left-panel-left-label profile-field-name">
+                                        @Html.Label("Country")
+                                    </div>
+                                    <div class="left-panel-book-field profile-field-value">
+                                        <p class="profile-info-field">@Model.Country</p>
+                                    </div>
+                                    <div id="Country-btn" class="left-panel-book-field profile-info-btn" value="@Model.Country">
+                                        Edit
+                                    </div>
+                                </li>
+                                <li id="City-li">
+                                    <div class="left-panel-left-label profile-field-name">
+                                        @Html.Label("City")
+                                    </div>
+                                    <div class="left-panel-book-field profile-field-value">
+                                        <p class="profile-info-field">@Model.City</p>
+                                    </div>
+                                    <div id="City-btn" class="left-panel-book-field profile-info-btn" value="@Model.City">
+                                        Edit
+                                    </div>
+                                </li>
+                                <li id="Quote-li">
+                                    <div class="left-panel-left-label profile-field-name">
+                                        @Html.Label("Favourite quote")
+                                    </div>
+                                    <div class="left-panel-book-field profile-field-value">
+                                        <p class="profile-info-field">@Model.Quote</p>
+                                    </div>
+                                    <div id="Quote-btn" class="left-panel-book-field profile-info-btn" value="@Model.Quote">
+                                        Edit
+                                    </div>
+                                </li>
+                                <li id="Category-li">
+                                    <div class="left-panel-left-label profile-field-name">
+                                        @Html.Label("Favourite book category")
+                                    </div>
+                                    <div class="left-panel-book-field profile-field-value">
+                                        <p class="profile-info-field">@Model.FavouriteBookCategory</p>
+                                    </div>
+                                    <div id="Category-btn" class="left-panel-book-field profile-info-btn" value="@Model.FavouriteBookCategory">
+                                        Edit
+                                    </div>
+                                </li>
+                                <li id="Book-li" class="last-li">
+                                    <div class="left-panel-left-label profile-field-name">
+                                        @Html.Label("Favourite book")
+                                    </div>
+                                    <div class="left-panel-book-field profile-field-value">
+                                        <p class="profile-info-field">@Model.FavouriteBook</p>
+                                    </div>
+                                    <div id="Book-btn" class="left-panel-book-field profile-info-btn" value="@Model.FavouriteBook">
+                                        Edit
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="error">
+                                @Html.ValidationSummary(false, "", new { @class = "error" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

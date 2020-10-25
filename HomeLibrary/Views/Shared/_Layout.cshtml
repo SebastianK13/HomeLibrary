@@ -1,0 +1,97 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="~/Content/LayoutStyle.css">
+    <script src="~/Scripts/jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="~/Scripts/JavaScript.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.2.2.min.js"></script>
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body  class="body-spec">
+    <div class="wrapper">
+        <div id="header-container" class="container-header">
+            <div class="outher-nav">
+                <div id="nth" class="navbarcontent">
+                    <div class="logo">
+                        <div class="logo-text">
+                            <img src="@Url.Content("~/Images/HomeLibraryLogo.png")" aria-hidden="true" />
+                            <a>HOME LIBRARY</a>
+                            <div class="menu-toggle"><img src="@Url.Content("~/Images/menu_mobile.png")" aria-hidden="true" /></div>
+                        </div>
+                    </div>
+                    <div class="menu-section">
+                        <nav id="navb">
+                            <ul id="list" class="LeftLi">
+                                <li><a href="/Home/Index">Home</a></li>
+                                <li><a href="/Home/About">About</a></li>
+                                <li><a href="/Home/Help">Help</a></li>
+                            </ul>
+                            @Html.Partial("_LoginPartial")
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="second-container" class="container-2">
+            <div class="lower-nav-content">
+                <div id="account-menu" class="account-menu-section">
+                    <div class="left-part-container">
+                        <div id="left-side" class="left-part">
+                            <ul class="account-cells">
+                                <li><a href="/Library/ManageBooks">My library</a></li>
+                                <li><a href="/Library/RateBook">Rate book</a></li>
+                                <li><a href="/Library/TransactionOffers">Swap book</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div id="separator" class="separate-part">
+                    </div>
+                    <div class="right-part-container">
+                        <div id="right-side" class="right-part">
+                            <ul class="activity-cells">
+                                <li><a href="/Community/Messages">Messages</a></li>
+                                <li><a href="/Community/Friends">Friends</a></li>
+                                <li><a href="/Community/InformationManager">Account settings</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="bms" class="button-menu-section-cover">
+            </div>
+            <div id="md" class="middle-part">
+                <img id="arrow-left" class="arrow-iddle" src="@Url.Content("~/Images/arrow_left.png")" />
+                <img id="menu-icon" src="@Url.Content("~/Images/account_icon.png")" />
+                <img id="arrow-right" class="arrow-iddle" src="@Url.Content("~/Images/arrow_right.png")">
+            </div>
+        </div>
+        <div id="third-container" class="container-main">
+            @RenderBody()
+            @Scripts.Render("~/bundles/jquery")
+            @Scripts.Render("~/bundles/bootstrap")
+            @RenderSection("scripts", required: false)
+        </div>
+    </div>
+    @*<div id="bodyID" class="loader-wrapper">
+        <span class="loader"><span class="loader-inner"></span></span>
+    </div>*@
+    <div id="Chat-view">
+        @{Html.RenderAction("Chat", "Partials");}
+    </div>
+    <script>
+        $(window).on("load", function () {
+            $(".loader-wrapper").fadeOut("slow");
+        })
+    </script>
+    <footer>
+        <div class="outher-footer"></div>
+        <div class="footer">
+            <p>FOOTER</p>
+        </div>
+    </footer>
+</body>
+</html>

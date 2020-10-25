@@ -1,0 +1,94 @@
+﻿@using HomeLibrary
+@model dynamic
+<div id="profile-view" class="profile-view-content">
+    <div id="profile-head" class="head-profile" style="background-image: url('@Url.Content("~/Images/" + Model.Profile.BackgroundPic)" )')" value=@Model.Profile.BackgroundPic>
+        <div id="profile-mask" class="profile-head-mask"></div>
+        <div id="profile-photo" class="photo-profile" style="background-image: url('@Url.Content("~/Images/" + Model.Profile.ProfilePic)" )')" value=@Model.Profile.ProfilePic>
+        </div>
+        <label class="nickname-profile">@Model.Profile.Nickname</label>
+    </div>
+    <div class="head-profile-bottom">
+        <ul class="profile-navbar">
+            <li class="profile-navbar-li"><a href="/Community/FriendsPictures?profileID=@Model.Profile.ProfileID">Photos</a></li>
+            <li class="profile-navbar-li"><a href="/Community/FriendsInformations?profileID=@Model.Profile.ProfileID">Informations</a></li>
+            <li class="profile-navbar-li"><a href="/Community/FriendsUserList?profileID=@Model.Profile.ProfileID">Friends</a></li>
+        </ul>
+    </div>
+    <div id="profile-body" class="corpse-profile">
+        @using (Html.BeginForm("FriendsProfile", "Community", FormMethod.Post, new { id = "fProfileForm", enctype = "multipart/form-data" }))
+        {
+            <input type="hidden" name="fID" />
+        }
+        <div id="users-search" class="users-list">
+            <div class="user-list-header">Users</div>
+            @using (Html.BeginForm("FriendUserList", "Community", FormMethod.Post, new { id = "inviteForm" }))
+            {
+                if (Model.userList != null && Model.userList.Count > 0)
+                {
+                    for (int i = 0; i < Model.userList.Count; i++)
+                    {
+                        if (Model.friendList[i])
+                        {
+                            <div class="user" value=@Model.userList[i].ProfileID>
+                                <div class="user-picture" style="background-image: url('@Url.Content("~/Images/" + Model.userList[i].ProfilePic)" )')"></div>
+                                <div class="user-info">
+                                    <div class="nameSector">
+                                        <label class="user-info-name">@Model.userList[i].Nickname</label>
+                                    </div>
+                                    <div class="citySector">
+                                        <label class="user-info-loc">@Model.userList[i].City</label>
+                                    </div>
+                                </div>
+                                <div class="add-friend-btn-container">
+                                    <div class="removeFriend">- Remove</div>
+                                </div>
+                            </div>
+                        }
+                        else if (Model.invitedList[i])
+                        {
+                            <div class="user" value=@Model.userList[i].ProfileID>
+                                <div class="user-picture" style="background-image: url('@Url.Content("~/Images/" + Model.userList[i].ProfilePic)" )')"></div>
+                                <div class="user-info">
+                                    <div class="nameSector">
+                                        <label class="user-info-name">@Model.userList[i].Nickname</label>
+                                    </div>
+                                    <div class="citySector">
+                                        <label class="user-info-loc">@Model.userList[i].City</label>
+                                    </div>
+                                </div>
+                                <div class="add-friend-btn-container">
+                                    <div class="repeatInv">Invited</div>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="user" value=@Model.userList[i].ProfileID>
+                                <div class="user-picture" style="background-image: url('@Url.Content("~/Images/" + Model.userList[i].ProfilePic)" )')"></div>
+                                <div class="user-info">
+                                    <div class="nameSector">
+                                        <label class="user-info-name">@Model.userList[i].Nickname</label>
+                                    </div>
+                                    <div class="citySector">
+                                        <label class="user-info-loc">@Model.userList[i].City</label>
+                                    </div>
+                                </div>
+                                <div class="add-friend-btn-container">
+                                    <div class="invFriend">+ Add</div>
+                                </div>
+                            </div>
+                        }
+                    }
+                }
+                else
+                {
+                    <div class="user">
+                        No search result
+                    </div>
+                }
+                <input type="hidden" name="pId" />
+                <input type="hidden" name="thisProfileId" value=@Model.Profile.ProfileID />
+            }
+        </div>
+    </div>
+</div>

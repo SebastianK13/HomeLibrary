@@ -1,0 +1,87 @@
+﻿@model HomeLibrary.Models.ViewModels.SwapViewModel
+
+<div id="SinglePageContent" class="body-content-blank">
+    <div class="library-view-content">
+        <div id="right-panel" class="right-panel-section">
+            <div class="library-navbar">
+                <div class="library-navbar-header">
+                    <p>Category</p>
+                    <img id="close-navbar" src="~/Images/leave_btn.png" />
+                </div>
+                <ul class="library-navbar-list">
+                    <li>
+                        <img src="@Url.Content("~/Images/menu_arrow.png")" />
+                        <a href="/Library/ManageBooks">All books</a>
+                    </li>
+                    <li>
+                        <img src="@Url.Content("~/Images/menu_arrow.png")" />
+                        <a href="/Library/BorrowedBooks">Borrowed books</a>
+                    </li>
+                    <li>
+                        <img src="@Url.Content("~/Images/menu_arrow.png")" />
+                        <a href="/Library/LendBooks">Lend books</a>
+                    </li>
+                    <li>
+                        <img src="@Url.Content("~/Images/menu_arrow.png")" />
+                        <a href="/Library/AvailableBooks">Available - own only</a>
+                    </li>
+                </ul>
+                <div class="sort-section">
+                    <div class="action-header">
+                        <p>Actions</p>
+                    </div>
+                    <ul class="library-navbar-list">
+                        <li>
+                            <img src="@Url.Content("~/Images/menu_arrow.png")" />
+                            <a href="/Library/TransactionOffers">Transaction offers</a>
+                        </li>
+                        <li>
+                            <img src="@Url.Content("~/Images/menu_arrow.png")" />
+                            <a href="/Library/SwapTransactions">My transactions</a>
+                        </li>
+                        <li>
+                            <img src="@Url.Content("~/Images/menu_arrow.png")" />
+                            <a href="/Library/SwapBook">New transaction</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div id="navbar-open" class="close-navbar-button">
+            Open
+        </div>
+        <div id="left-panel" class="left-panel-section">
+            <div class="left-panel-content">
+                @using (Html.BeginForm("AwayTransaction", "Library", FormMethod.Post, new { id = "AwayT-form", enctype = "multipart/form-data" }))
+                {
+                    <div class="books-swap">
+                        <div id="BookToSwap" class="single-book swap" value="@Model.SwapView[0].SwapID">
+                            <div class="book-container">
+                                <div class="single-book-img">
+                                    <img id="SwapBookIMG" src="@Url.Content("~/Images/" + Model.SwapView[0].Source)">
+                                </div>
+                                <div class="book-informations">
+                                    <p id="SwapBookTitle" class="book-title">@Model.SwapView[0].Title</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="offer" class="swap-book-info tHeight">
+                            <div class="description-swap" id="descSw">
+                                <label class="desc-swap-head">Convince owner to give you this book</label>
+                                <textarea name="ProposeDesc" id="SwapD" maxlength="140" cols="7" class="desc-text"></textarea>
+                                <label class="desc-swap-bottom">Limit of characters: 150</label>
+                            </div>
+                            <div id="confirm" class="btn-swap">Propose</div>
+                        </div>
+                    </div>
+                    <input type="hidden" id="SwapID" name="SwapID"/>
+                }
+                <div class="error">
+                    @Html.ValidationSummary(false, "", new { @id = "ErrorsSection", @class = "error" })
+                </div>
+                <script type="text/javascript">
+                </script>
+            </div>
+        </div>
+    </div>
+</div>

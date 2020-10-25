@@ -1,0 +1,145 @@
+﻿@model HomeLibrary.Models.BookDetail
+<div id="SinglePageContent" class="body-content-blank">
+    <div class="library-view-content">
+        <div id="right-panel" class="right-panel-section">
+            <div class="library-navbar">
+                <div class="library-navbar-header">
+                    <p>Category</p>
+                    <img id="close-navbar" src="~/Images/leave_btn.png" />
+                </div>
+                <ul class="library-navbar-list">
+                    <li>
+                        <img src="@Url.Content("~/Images/menu_arrow.png")" />
+                        <a href="/Library/ManageBooks">All books</a>
+                    </li>
+                    <li>
+                        <img src="@Url.Content("~/Images/menu_arrow.png")" />
+                        <a href="/Library/BorrowedBooks">Borrowed books</a>
+                    </li>
+                    <li>
+                        <img src="@Url.Content("~/Images/menu_arrow.png")" />
+                        <a href="/Library/LendBooks">Lend books</a>
+                    </li>
+                    <li>
+                        <img src="@Url.Content("~/Images/menu_arrow.png")" />
+                        <a href="/Library/AvailableBooks">Available - own only</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div id="navbar-open" class="close-navbar-button">
+            Open
+        </div>
+        <div id="left-panel" class="left-panel-section">
+            @using (Html.BeginForm("AddBook", "Library", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="left-panel-content">
+                    <div class="header-add-book">Add new book</div>
+                    @*<div class="left-panel-container">*@
+                    <div class="left-panel-left-side">
+                        <div class="left-panel-left-side-content">
+                            <ul class="addbook-fields">
+                                @Html.AntiForgeryToken()
+                                <li>
+                                    <div class="left-panel-left-label">
+                                        @Html.Label("Title")
+                                    </div>
+                                    <div class="left-panel-left-textbox">
+                                        @Html.TextBoxFor(m => m.Title, null, new { @class = "form-control" })
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="left-panel-left-label">
+                                        @Html.Label("Category")
+                                    </div>
+                                    <div class="left-panel-left-textbox">
+                                        @Html.TextBoxFor(m => m.Category, null, new { @class = "form-control" })
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="left-panel-left-label">
+                                        @Html.Label("Author")
+                                    </div>
+                                    <div class="left-panel-left-textbox">
+                                        @Html.TextBoxFor(m => m.Author, null, new { @class = "form-control" })
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="left-panel-left-label">
+                                        @Html.Label("Language")
+                                    </div>
+                                    <div class="left-panel-left-textbox">
+                                        @Html.TextBoxFor(m => m.Language, null, new { @class = "form-control" })
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="left-panel-left-label">
+                                        @Html.Label("Pages")
+                                    </div>
+                                    <div class="left-panel-left-textbox">
+                                        @Html.TextBoxFor(m => m.Pages, null, new { @class = "form-control" })
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="left-panel-left-label">
+                                        @Html.Label("Bookstand designation")
+                                    </div>
+                                    <div class="left-panel-left-textbox">
+                                        @Html.TextBoxFor(m => m.BookstandDesignation, null, new { @class = "form-control" })
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="left-panel-left-label">
+                                        @Html.Label("Shelf number")
+                                    </div>
+                                    <div class="left-panel-left-textbox">
+                                        @Html.TextBoxFor(m => m.ShelfNumber, null, new { @class = "form-control" })
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="left-panel-left-label">
+                                        @Html.Label("Book position")
+                                    </div>
+                                    <div class="left-panel-left-textbox">
+                                        @Html.TextBoxFor(m => m.BookPosition, null, new { @class = "form-control" })
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="left-panel-left-label">
+                                        @Html.Label("Description")
+                                    </div>
+                                    <div class="left-panel-left-textbox">
+                                        @Html.TextBoxFor(m => m.Description, null, new { @class = "form-control" })
+                                    </div>
+                                </li>
+
+                            </ul>
+                            <div class="error">
+                                @Html.ValidationSummary(false, "", new { @class = "error" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="left-panel-right-side">
+                        <div class="left-panel-right-side-content">
+                            <div class="add-photo">
+                                <img id="book-img" src="@Url.Content("~/Images/default_img.png")" alt="Book image" />
+                            </div>
+                            <label class="button-mask">
+                                <input type='file' name="file" id="add-book-btn" />
+                                Chose file
+                            </label>
+                        </div>
+                    </div>
+                    <div class="accept-buttons">
+                        <ul>
+                            <li class="button-add-book">
+                                <input type="submit" class="btn btn-reg" value="Add book" />
+                                <a href="/Library/AddBook" class="btn btn-green">Clear form</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

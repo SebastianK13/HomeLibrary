@@ -1,0 +1,60 @@
+﻿@model HomeLibrary.Models.LoginViewModel
+@{
+    ViewBag.Title = "Login";
+}
+
+<div id="SinglePageContent" class="body-content-blank">
+    <div class="Register-body">
+        <div class="Register-content-container">
+            <div class="Header-form">
+                <div class="header-margin">
+                    <p class="Hb">Log in</p>
+                    <p class="Hs">Use a local account to log in.</p>
+                </div>
+            </div>
+            <div class="Register-content">
+                <div class="Register-invitation">
+                    <p class="Hb">Don't have an account in our service?</p>
+                    <img src="@Url.Content("~/Images/HomeLibraryLogo.png")" aria-hidden="true" />
+                    <p class="Hs">
+                        If you don't have an account let's create one! Just click on 'Register' button below 
+                        and create your own account.
+                    </p>
+                    <a href="/Account/Register" class="btn btn-green">Register</a>
+                </div>
+                <div class="Register-form">
+                    <p class="Login-marg">Log in</p>
+                    @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "inner-form", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        @Html.ValidationSummary()
+                        <div class="form-input">
+                            <div class="form-label">
+                                @Html.LabelFor(m => m.Email)
+                            </div>
+                            <div class="input-area">
+                                @Html.TextBoxFor(m => m.Email)
+                               
+                            </div>
+                        </div>
+                        <div class="form-input">
+                            <div class="form-label">
+                                @Html.LabelFor(m => m.Password)
+                            </div>
+                            <div class="input-area">
+                                @Html.PasswordFor(m => m.Password)
+                            </div>
+                        </div>
+                        <div class="Login-button-section">
+                            <input type="submit" class="btn btn-reg" value="Log in" />
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

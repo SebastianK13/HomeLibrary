@@ -1,0 +1,68 @@
+﻿@model HomeLibrary.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Register";
+}
+
+<div id="SinglePageContent" class="body-content-blank">
+    <div class="Register-body">
+        <div class="Register-content-container">
+            <div class="Header-form">
+                <div class="header-margin">
+                    <p class="Hb">@ViewBag.Title</p>
+                    <p class="Hs">Create a new account</p>
+                </div>
+            </div>
+            <div class="Register-content">
+                <div class="Register-invitation">
+                    <p class="Hb">Welcome to Home Library!</p>
+                    <img src="@Url.Content("~/Images/HomeLibraryLogo.png")" aria-hidden="true" />
+                    <p class="Hs">
+                        Join our community and enjoy with your own virtual library. It is the unique place where
+                        you can find information about books in your FormCollection and to exchange books with others.
+                        You will not regret!<br>Join now!
+                    </p>
+                    <a href="/Home/Index" class="btn btn-green">Learn More</a>
+                </div>
+                <div class="Register-form">
+                    <p>Sign up</p>
+                    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "inner-form", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        @Html.ValidationSummary()
+                        <div class="form-input">
+                            <div class="form-label">
+                                @Html.LabelFor(m => m.Email)
+                            </div>
+                            <div class="input-area">
+                                @Html.TextBoxFor(m => m.Email)
+                            </div>
+                        </div>
+                        <div class="form-input">
+                            <div class="form-label">
+                                @Html.LabelFor(m => m.Password)
+                            </div>
+                            <div class="input-area">
+                                @Html.PasswordFor(m => m.Password)
+                            </div>
+                        </div>
+                        <div class="form-input-cp">
+                            <div class="form-label-cp">
+                                @Html.LabelFor(m => m.ConfirmPassword)
+                            </div>
+                            <div class="input-area">
+                                @Html.PasswordFor(m => m.ConfirmPassword)
+                            </div>
+                        </div>
+                        <div class="register-button-section">
+                            <input type="submit" class="btn btn-reg" value="Register" />
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

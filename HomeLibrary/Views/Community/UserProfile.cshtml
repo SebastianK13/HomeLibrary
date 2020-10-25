@@ -1,0 +1,24 @@
+﻿@model HomeLibrary.Models.BasicProfileInfoModels
+<div id="profile-view" class="profile-view-content">
+    @using (Html.BeginForm("Profile", "Community", FormMethod.Post, new { id = "Profile-form", enctype = "multipart/form-data" }))
+    {
+
+        <div id="profile-head" class="head-profile" style="background-image: url('@Url.Content("~/Images/" + Model.BackgroundPic)" )')" value=@Model.BackgroundPic>
+            <div id="profile-mask" class="profile-head-mask"></div>
+            <div id="profile-photo" class="photo-profile" style="background-image: url('@Url.Content("~/Images/" + Model.ProfilePic)" )')" value=@Model.ProfilePic>
+            </div>
+            <label class="nickname-profile">@Model.Nickname</label>
+        </div>
+
+    }
+    <div class="head-profile-bottom">
+        <ul class="profile-navbar">
+            <li class="profile-navbar-li"><a href="/Community/PicturesProfile">Photos</a></li>
+            <li class="profile-navbar-li"><a href="/Community/InformationManager">Informations</a></li>
+            <li class="profile-navbar-li"><a href="/Community/Friends">Friends</a></li>
+        </ul>
+    </div>
+    <div id="profile-body" class="corpse-profile">
+
+    </div>
+</div>

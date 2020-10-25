@@ -1,0 +1,79 @@
+﻿@using HomeLibrary
+@model dynamic
+<div id="users-view" class="users-view-content">
+    @using (Html.BeginForm("Friends", "Community", FormMethod.Post, new { id = "Search-form", enctype = "multipart/form-data" }))
+    {
+
+    }
+    <div id="users-search" class="users-list">
+        <div class="user-list-header">Users</div>
+        @using (Html.BeginForm("Users", "Community", FormMethod.Post, new { id = "userForm" }))
+        {
+            if (Model.userList != null && Model.userList.Count > 0)
+            {
+                for (int i = 0; i < Model.userList.Count; i++)
+                {
+                    if (Model.friendList[i])
+                    {
+                        <div class="user" value=@Model.userList[i].ProfileID>
+                            <div class="user-picture" style="background-image: url('@Url.Content("~/Images/" + Model.userList[i].ProfilePic)" )')"></div>
+                            <div class="user-info">
+                                <div class="nameSector">
+                                    <label class="user-info-name">@Model.userList[i].Nickname</label>
+                                </div>
+                                <div class="citySector">
+                                    <label class="user-info-loc">@Model.userList[i].City</label>
+                                </div>
+                            </div>
+                            <div class="add-friend-btn-container">
+                                <div id="removeFriendSearch" class="remove-friend-btn">- Remove</div>
+                            </div>
+                        </div>
+                    }
+                    else if (Model.invitedList[i])
+                    {
+                        <div class="user" value=@Model.userList[i].ProfileID>
+                            <div class="user-picture" style="background-image: url('@Url.Content("~/Images/" + Model.userList[i].ProfilePic)" )')"></div>
+                            <div class="user-info">
+                                <div class="nameSector">
+                                    <label class="user-info-name">@Model.userList[i].Nickname</label>
+                                </div>
+                                <div class="citySector">
+                                    <label class="user-info-loc">@Model.userList[i].City</label>
+                                </div>
+                            </div>
+                            <div class="add-friend-btn-container">
+                                <div id="repeatInvSearch" class="invited-friend-btn">Invited</div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="user" value=@Model.userList[i].ProfileID>
+                            <div class="user-picture" style="background-image: url('@Url.Content("~/Images/" + Model.userList[i].ProfilePic)" )')"></div>
+                            <div class="user-info">
+                                <div class="nameSector">
+                                    <label class="user-info-name">@Model.userList[i].Nickname</label>
+                                </div>
+                                <div class="citySector">
+                                    <label class="user-info-loc">@Model.userList[i].City</label>
+                                </div>
+                            </div>
+                            <div class="add-friend-btn-container">
+                                <div id="invFriendSearch" class="add-friend-btn">+ Add</div>
+                            </div>
+                        </div>
+                    }
+                }
+            }
+            else
+            {
+                <div class="user">
+                    No search result
+                </div>
+            }
+            <input type="hidden" name="pId" />
+            <input type="hidden" name="searchValue" value="@ViewBag.searchV" />
+        }
+    </div>
+</div>

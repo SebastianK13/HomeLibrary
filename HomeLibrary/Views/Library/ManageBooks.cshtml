@@ -1,0 +1,114 @@
+﻿@using HomeLibrary
+@model dynamic
+@{
+    int c = 0;
+}
+<div id="SinglePageContent" class="body-content-blank">
+    <div class="library-view-content">
+        <div id="right-panel" class="right-panel-section">
+            <div class="library-navbar">
+                <div class="library-navbar-header">
+                    <p>Category</p>
+                    <img id="close-navbar" src="~/Images/leave_btn.png" />
+                </div>
+                <ul class="library-navbar-list">
+                    <li>
+                        <img src="@Url.Content("~/Images/menu_arrow.png")" />
+                        <a href="/Library/ManageBooks">All books</a>
+                    </li>
+                    <li>
+                        <img src="@Url.Content("~/Images/menu_arrow.png")" />
+                        <a href="/Library/BorrowedBooks">Borrowed books</a>
+                    </li>
+                    <li>
+                        <img src="@Url.Content("~/Images/menu_arrow.png")" />
+                        <a href="/Library/LendBooks">Lend books</a>
+                    </li>
+                    <li>
+                        <img src="@Url.Content("~/Images/menu_arrow.png")" />
+                        <a href="/Library/AvailableBooks">Available - own only</a>
+                    </li>
+                </ul>
+                <div class="sort-section">
+                    <div class="action-header">
+                        <p>Actions</p>
+                    </div>
+                    <ul class="library-navbar-list">
+                        <li>
+                            <img src="@Url.Content("~/Images/menu_arrow.png")" />
+                            <a href="/Library/AddBook">Add book</a>
+                        </li>
+                        <li id="modify">
+                            <img src="@Url.Content("~/Images/menu_arrow.png")" />
+                            <a>Modify book</a>
+                        </li>
+                        <li id="remove">
+                            <img src="@Url.Content("~/Images/menu_arrow.png")" />
+                            <a>Remove book</a>
+                        </li>
+                        <li id="status">
+                            <img src="@Url.Content("~/Images/menu_arrow.png")" />
+                            <a href="/Library/ChangeStatus">Change book status</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="sort-section">
+                    <div class="sort-header">
+                        <p>Sort</p>
+                    </div>
+                    @using (Html.BeginForm("Sort", "library",new { viewName ="ManageBooks", actionNumber = ViewBag.actionID}, FormMethod.Post))
+                    {
+                        <div class="checkboxes-field">
+                            @Html.AntiForgeryToken()
+                            @foreach (var sorts in Model.Sort)
+                            {
+                                <div>
+                                    @Html.CheckBox((string)sorts.Name, (bool)sorts.Status, new { onclick = "this.form.submit();", autocomplete = "off"})
+                                    @Html.Label((string)sorts.Name, (string)sorts.Name)
+                                </div>
+                            }
+
+                        </div>
+                    }
+                </div>
+                <div class="filtr-section">
+                    <div class="filter-header">
+                        <p>Filtr</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="navbar-open" class="close-navbar-button">
+            Open
+        </div>
+        <div id="left-panel" class="left-panel-section">
+            <div class="left-panel-content">
+                @using (Html.BeginForm("ShowBookDetails", "Library", FormMethod.Post, new { id = "book-form", enctype = "multipart/form-data" }))
+                {
+                    <div class="books">
+                        @foreach (var b in Model.Book)
+                        {
+                            <div name="@b.BookID" class="single-book">
+                                <div class="book-container">
+                                    <div class="single-book-img">
+                                        <img src="@Url.Content("~/Images/" + b.ImageSource)" />
+                                    </div>
+                                    <div class="book-informations">
+                                        <p class="book-title">@b.Title</p>
+                                    </div>
+                                    <div class="@ViewBag.bookClass[0]">
+                                        <p class="more-det">@ViewBag.bookClass[1]</p>
+                                        <img @ViewBag.bookClass[2] src="@ViewBag.bookClass[3]" />
+                                    </div>
+                                </div>
+                            </div>
+                            c++;
+                        }
+                    </div>
+                    <input type="hidden" id="clicked-value" name="@ViewBag.bookClass[4]">
+                }
+            </div>
+
+        </div>
+    </div>
+</div>

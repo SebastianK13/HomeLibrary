@@ -1,0 +1,51 @@
+﻿@using Microsoft.AspNet.Identity
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+    {
+        @Html.AntiForgeryToken()
+    }
+        <ul id="list" class="RightLi">
+            <li id="search-bar-li" class="search">
+                <div id="search-area" class="searchPlace">
+                    <div id="search" class="search-bar">
+                        <input id="inpt" type="text" spellcheck="false" class="search-text-box" placeholder="Search..." />
+                        <a id="activate" class="btn-search"></a>
+                    </div>
+                </div>
+            </li>
+            <li>
+                @{Html.RenderAction("SelectAvatar", "Navbar");}
+            </li>
+            <li>
+                <div class="Manage">
+                    <div class="Manage-ouhter-2">
+                        <a class="manage-inner" id="logout" @*href="javascript:document.getElementById('logoutForm').submit()"*@></a>
+                    </div>
+                </div>
+            </li>
+        </ul>
+}
+else
+{
+    <ul id="list" class="RightLi">
+        <li id="search-bar-li" class="search">
+            <div id="search-area" class="searchPlace">
+                <div id="search" class="search-bar">
+                    <input id="inpt" type="text" spellcheck="false" name="" class="search-text-box" placeholder="Search..." />
+                    <a id="activate" class="btn-search"></a>
+                </div>
+            </div>
+        </li>
+        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+    </ul>
+}
+<script>
+    $(window).on("load", function () {
+        var manage = document.getElementById("logout");
+        if (manage == null) {
+            sessionStorage.clear();
+        }
+    });
+</script>

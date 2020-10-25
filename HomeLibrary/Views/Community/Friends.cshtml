@@ -1,0 +1,66 @@
+﻿@model List<HomeLibrary.Models.Friends>
+@{
+    int amount = ViewBag.notification;
+}
+<div id="users-view" class="users-view-content">
+    @using (Html.BeginForm("FriendsProfile", "Community", FormMethod.Post, new { id = "fProfileForm", enctype = "multipart/form-data" }))
+    {
+        <input type="hidden" name="fID" />
+    }
+    <div id="users-search" class="users-list">
+        <div class="friend-list-header">
+            <div class="space-button"></div>
+            <div id="friends-btn" class="friends-button">
+                Friends
+            </div>
+            <div class="space-button"></div>
+            @if (amount != 0)
+            {
+                <div id="invs-btn" class="invitations-button-noti" value=@amount>
+                    <p>Invitations</p>
+                    <div class="noti-strike">
+                        @if (amount < 10)
+                        {
+                            <p>@amount</p>
+                        }
+                        else
+                        {
+                            <p>9+</p>
+                        }
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div id="invs-btn" class="invitations-button">
+                    <p>Invitations</p>
+                </div>
+            }
+            <div class="space-button"></div>
+        </div>
+        @using (Html.BeginForm("InvitationAccept", "Community", FormMethod.Post, new { id = "userForm" }))
+        {
+            foreach (var f in Model)
+            {
+                if (f != null)
+                {
+                    <div class="user" value=@f.Profile.ProfileID>
+                        <div class="user-picture" style="background-image: url('@Url.Content("~/Images/" + f.Profile.ProfilePic)" )')"></div>
+                        <div class="user-info">
+                            <div class="nameSector">
+                                <label class="user-info-name">@f.Profile.Nickname</label>
+                            </div>
+                            <div class="citySector">
+                                <label class="user-info-loc">@f.Profile.City</label>
+                            </div>
+                        </div>
+                        <div class="add-friend-btn-container">
+                            <div class="remove-friend-btn">- Remove</div>
+                        </div>
+                    </div>
+                }
+            }
+            <input type="hidden" name="pId" />
+        }
+    </div>
+</div>

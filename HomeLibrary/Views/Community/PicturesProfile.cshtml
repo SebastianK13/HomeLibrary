@@ -1,0 +1,95 @@
+﻿@model List<HomeLibrary.Models.ProfilePicturesModels>
+
+<div id="SinglePageContent" class="body-content-blank">
+    <div class="library-view-content">
+        <div id="right-panel" class="right-panel-section">
+            <div class="library-navbar">
+                <div class="library-navbar-header">
+                    <p>Category</p>
+                    <img id="close-navbar" src="~/Images/leave_btn.png" />
+                </div>
+                <ul class="library-navbar-list">
+                    <li>
+                        <img src="@Url.Content("~/Images/menu_arrow.png")" />
+                        <a href="/Community/InformationManager">Change profile informations</a>
+                    </li>
+                    <li>
+                        <img src="@Url.Content("~/Images/menu_arrow.png")" />
+                        <a href="/Library/BorrowedBooks">Change account informations</a>
+                    </li>
+                    <li>
+                        <img src="@Url.Content("~/Images/menu_arrow.png")" />
+                        <a href="/Library/LendBooks">Block users</a>
+                    </li>
+                    <li>
+                        <img src="@Url.Content("~/Images/menu_arrow.png")" />
+                        <a href="/Community/PicturesProfile">Manage pictures</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div id="navbar-open" class="close-navbar-button">
+            Open
+        </div>
+        <div id="left-panel" class="left-panel-section">
+            <div class="left-panel-content">
+                @using (Html.BeginForm("PicturesProfile", "Community", FormMethod.Post, new { id = "editProfile", enctype = "multipart/form-data" }))
+                {
+                    <div id="buttons-nav" class="add-profile-photo">
+                        <div class="initial-btns">
+                            <label id="remove-photo" class="remove-photo-btn">
+                                Remove photo
+                            </label>
+                            <label id="add-photo" class="add-photo-btn">
+                                <input type='file' name="file" id="add-photo-input" />
+                                Add photo
+                            </label>
+                        </div>
+                    </div>
+                    <input type="hidden" name="choseToRemove">
+                }
+                @using (Html.BeginForm("PicturesSetter", "Community", FormMethod.Post, new { id = "photosetterform", enctype = "multipart/form-data" }))
+                {
+                    <div class="photo-setter-container">
+                        <div id="photo-setter" class="photo-setter-class">
+                            <div id="ph-chcbx" class="photo-btn">
+                                <input type="checkbox" id="set-photo" value="pictures" />
+                                <label>
+                                    Set profile photo
+                                </label>
+                                <input type="hidden" name="choseBackground" />
+                            </div>
+                            <div id="bckg-chcbx" class="backgorund-btn">
+                                <input type="checkbox" id="set-bckg" value="pictures" />
+                                <label>
+                                    Set background image
+                                </label>
+                                <input type="hidden" name="choseProfilePic" />
+                            </div>
+                        </div>
+                    </div>
+                }
+                <div class="right-panel-manage">
+                    <div class="right-panel-content-manage">
+                        <div id="photos-id" class="photos">
+                            @if (Model.Count > 0)
+                            {
+                                foreach (var p in Model)
+                                {
+                                    <div class="single-photo">
+                                        <div class="photo-container">
+                                            <div class="single-photo-img" id=@p.PictureID value=@p.PicturePath style="background-image: url('@Url.Content("~/Images/" + p.PicturePath)" )')" name="notclicked"></div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        </div>
+                        <div class="error">
+                            @Html.ValidationSummary(false, "", new { @class = "error" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

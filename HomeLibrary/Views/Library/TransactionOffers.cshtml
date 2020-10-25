@@ -1,0 +1,139 @@
+﻿@using HomeLibrary.Models
+@model dynamic
+@{
+}
+<div id="SinglePageContent" class="body-content-blank">
+    <div class="library-view-content">
+        <div id="right-panel" class="right-panel-section">
+            <div class="library-navbar">
+                <div class="library-navbar-header">
+                    <p>Category</p>
+                    <img id="close-navbar" src="~/Images/leave_btn.png" />
+                </div>
+                <ul class="library-navbar-list">
+                    <li>
+                        <img src="@Url.Content("~/Images/menu_arrow.png")" />
+                        <a href="/Library/ManageBooks">All books</a>
+                    </li>
+                    <li>
+                        <img src="@Url.Content("~/Images/menu_arrow.png")" />
+                        <a href="/Library/BorrowedBooks">Borrowed books</a>
+                    </li>
+                    <li>
+                        <img src="@Url.Content("~/Images/menu_arrow.png")" />
+                        <a href="/Library/LendBooks">Lend books</a>
+                    </li>
+                    <li>
+                        <img src="@Url.Content("~/Images/menu_arrow.png")" />
+                        <a href="/Library/AvailableBooks">Available - own only</a>
+                    </li>
+                </ul>
+                <div class="sort-section">
+                    <div class="action-header">
+                        <p>Actions</p>
+                    </div>
+                    <ul class="library-navbar-list">
+                        <li>
+                            <img src="@Url.Content("~/Images/menu_arrow.png")" />
+                            <a href="/Library/TransactionOffers">Transaction offers</a>
+                        </li>
+                        <li>
+                            <img src="@Url.Content("~/Images/menu_arrow.png")" />
+                            <a href="/Library/SwapTransactions">My transactions</a>
+                        </li>
+                        <li>
+                            <img src="@Url.Content("~/Images/menu_arrow.png")" />
+                            <a href="/Library/SwapBook">New transaction</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="sort-section">
+                    <div class="sort-header">
+                        <p>Sort</p>
+                    </div>
+                    @using (Html.BeginForm("Sort", "library", new { viewName = "ManageBooks", actionNumber = ViewBag.actionID }, FormMethod.Post))
+                    {
+                        <div class="checkboxes-field">
+                            @Html.AntiForgeryToken()
+                            @foreach (var sorts in Model.Sort)
+                            {
+                                <div>
+                                    @Html.CheckBox((string)sorts.Name, (bool)sorts.Status, new { onclick = "this.form.submit();", autocomplete = "off" })
+                                    @Html.Label((string)sorts.Name, (string)sorts.Name)
+                                </div>
+                            }
+                        </div>
+                    }
+                </div>
+                <div class="filtr-section">
+                    <div class="filter-header">
+                        <p>Filtr</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="navbar-open" class="close-navbar-button">
+            Open
+        </div>
+        <div id="left-panel" class="left-panel-section">
+            <div class="left-panel-content">
+                @using (Html.BeginForm("SwitchTransaction", "Library", FormMethod.Post, new { id = "TransactionOffer-form", enctype = "multipart/form-data" }))
+                {
+                    <div class="books-transaction margint">
+                        @foreach (var s in Model.Swaps)
+                        {
+                            <div class="single-transaction">
+                                <div class="transaction-img">
+                                    <img id="OfferImage" src="@Url.Content("~/Images/" + s.Source)" />
+                                </div>
+                                <div class="transaction-details">
+                                    <div class="transaction-type">
+                                        <label>Transaction:</label>
+                                        <div>
+                                            @s.ActionName
+                                        </div>
+                                    </div>
+                                    <div class="transaction-desc">
+                                        <label>Description:</label>
+                                        <div>
+                                            @s.DescriptionOffer
+                                        </div>
+                                    </div>
+                                    <div class="book-details">
+                                        <label>Title:</label>
+                                        <div>
+                                            @s.Title
+                                        </div>
+                                    </div>
+                                </div>
+                                @if (s.ActionName == "Give it away")
+                                {
+                                    <div class="ButtonOffer Green" value="@s.ActionName,@s.SwapID" >
+                                        <div class="ButtonOfferBackground"></div>
+                                    </div>
+                                }
+                                else if (s.ActionName == "Sell")
+                                {
+                                    <div class="ButtonOffer Blue" value="@s.ActionName,@s.SwapID">
+                                        <div class="ButtonOfferBackground"></div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="ButtonOffer Orange" value="@s.ActionName,@s.SwapID">
+                                        <div class="ButtonOfferBackground"></div>
+                                    </div>
+                                }
+                            </div>
+                        }
+                    </div>
+                    <input type="hidden" name="SwapID" />
+                    <input type="hidden" name="actionName" />
+                }
+                <div class="error">
+                    @Html.ValidationSummary(false, "", new { @id = "ErrorsSection", @class = "error" })
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

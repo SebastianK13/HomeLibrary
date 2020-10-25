@@ -1,0 +1,68 @@
+﻿@model IEnumerable<HomeLibrary.Models.Sort>
+<div id="SinglePageContent" class="body-content-blank">
+    <div class="library-view-content">
+        <div id="right-panel" class="right-panel-section">
+            <div class="library-navbar">
+                <div class="library-navbar-header">
+                    <p>Category</p>
+                    <img id="close-navbar" src="~/Images/leave_btn.png" />
+                </div>
+                <ul class="library-navbar-list">
+                    <li>
+                        <img src="@Url.Content("~/Images/menu_arrow.png")" />
+                        <a href="/Library/MyLibrary">All books</a>
+                    </li>
+                    <li>
+                        <img src="@Url.Content("~/Images/menu_arrow.png")" />
+                        <a href="/Library/ManageBooks">Manage books</a>
+                    </li>
+                    <li>
+                        <img src="@Url.Content("~/Images/menu_arrow.png")" />
+                        <a href="/Home/Index">Borrowed books</a>
+                    </li>
+                    <li>
+                        <img src="@Url.Content("~/Images/menu_arrow.png")" />
+                        <a href="/Home/Index">Lend books</a>
+                    </li>
+                    <li>
+                        <img src="@Url.Content("~/Images/menu_arrow.png")" />
+                        <a href="/Home/Index">Available books</a>
+                    </li>
+                </ul>
+                <div class="sort-section">
+                    <div class="sort-header">
+                        <p>Sort</p>
+                    </div>
+                    @using (Html.BeginForm("MyLibrary", "library", FormMethod.Post))
+                    {
+                        <div class="checkboxes-field">
+                            @Html.AntiForgeryToken()
+                            @foreach (var sorts in Model)
+                            {
+                                <div>
+                                    @Html.CheckBox(sorts.Name, sorts.Status, new { onclick = "this.form.submit();", autocomplete = "off" })
+                                    @Html.Label(sorts.Name, sorts.Name)
+                                </div>
+                            }
+
+                        </div>
+                    }
+                </div>
+                <div class="filtr-section">
+                    <div class="filter-header">
+                        <p>Filtr</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div id="navbar-open" class="close-navbar-button">
+            Open
+        </div>
+        <div id="left-panel" class="left-panel-section">
+            <div class="left-panel-content">
+
+            </div>
+        </div>
+    </div>
+</div>

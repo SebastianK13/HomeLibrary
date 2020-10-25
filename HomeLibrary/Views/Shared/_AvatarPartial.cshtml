@@ -1,0 +1,15 @@
+﻿@model HomeLibrary.Models.BasicProfileInfoModels
+<div class="Manage">
+    @if (Model.ProfilePic != null)
+    {
+        <div class="Manage-ouhter" style="background-image: url('@Url.Content("~/Images/" + Model.ProfilePic)" )')">
+            @Html.ActionLink(" ", "UserProfile", "Community", routeValues: null, htmlAttributes: new { title = "Manage", @class = "Manage-inner" })
+        </div>
+    }
+    else
+    {
+        <div class="Manage-outher-null">
+            @Html.ActionLink(" ", "UserProfile", "Community", routeValues: null, htmlAttributes: new { title = "Manage", @class = "Manage-inner" })
+        </div>
+    }
+</div>

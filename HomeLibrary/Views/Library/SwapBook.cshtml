@@ -1,0 +1,96 @@
+﻿@model List<HomeLibrary.Models.ViewModels.BookView>
+@{
+    List<SelectListItem> ListItem = ViewBag.BookList;
+}
+<div id="SinglePageContent" class="body-content-blank">
+    <div class="library-view-content">
+        <div id="right-panel" class="right-panel-section">
+            <div class="library-navbar">
+                <div class="library-navbar-header">
+                    <p>Category</p>
+                    <img id="close-navbar" src="~/Images/leave_btn.png" />
+                </div>
+                <ul class="library-navbar-list">
+                    <li>
+                        <img src="@Url.Content("~/Images/menu_arrow.png")" />
+                        <a href="/Library/ManageBooks">All books</a>
+                    </li>
+                    <li>
+                        <img src="@Url.Content("~/Images/menu_arrow.png")" />
+                        <a href="/Library/BorrowedBooks">Borrowed books</a>
+                    </li>
+                    <li>
+                        <img src="@Url.Content("~/Images/menu_arrow.png")" />
+                        <a href="/Library/LendBooks">Lend books</a>
+                    </li>
+                    <li>
+                        <img src="@Url.Content("~/Images/menu_arrow.png")" />
+                        <a href="/Library/AvailableBooks">Available - own only</a>
+                    </li>
+                </ul>
+                <div class="sort-section">
+                    <div class="action-header">
+                        <p>Actions</p>
+                    </div>
+                    <ul class="library-navbar-list">
+                        <li>
+                            <img src="@Url.Content("~/Images/menu_arrow.png")" />
+                            <a href="/Library/TransactionOffers">Transaction offers</a>
+                        </li>
+                        <li>
+                            <img src="@Url.Content("~/Images/menu_arrow.png")" />
+                            <a href="/Library/SwapTransactions">My transactions</a>
+                        </li>
+                        <li>
+                            <img src="@Url.Content("~/Images/menu_arrow.png")" />
+                            <a href="/Library/SwapBook">New transaction</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div id="navbar-open" class="close-navbar-button">
+            Open
+        </div>
+        <div id="left-panel" class="left-panel-section">
+            <div class="left-panel-content">
+                @using (Html.BeginForm("SwapBook", "Library", FormMethod.Post, new { id = "Swap-form", enctype = "multipart/form-data" }))
+                {
+                    <div class="books-swap">
+                        <div id="BookToSwap" class="single-book swap">
+                            <div class="book-container">
+                                <div class="single-book-img hideDiv">
+                                    <img id="SwapBookIMG" />
+                                </div>
+                                <div class="book-informations hideDiv">
+                                    <p id="SwapBookTitle" class="book-title"></p>
+                                </div>
+                                <div class="single-book-label">
+                                    @Html.DropDownList("SwapID",
+                                    ListItem.Default("- - - - -Select book- - - - -", "-1")
+                                    , new { onchange = "FillSwapBI(obj)" })
+                                </div>
+                            </div>
+                        </div>
+                        <div id="offer" class="swap-book-info" style="visibility:hidden">
+                            @Html.DropDownList("SwapAction",
+                             new List<SelectListItem>
+                             {
+                                 new SelectListItem{Text="- - -Chose action - - -", Value="-1"},
+                                 new SelectListItem{Text="Give it away", Value="0"},
+                                 new SelectListItem{Text="Swap", Value="1"},
+                                 new SelectListItem{Text="Sell", Value="2"}
+                             })
+                        </div>
+                    </div>
+                }
+                <div class="error">
+                    @Html.ValidationSummary(false, "", new { @id = "ErrorsSection", @class = "error" })
+                </div>
+                <script type="text/javascript">
+                    var obj= @Html.Raw(Json.Encode(Model));
+                </script>
+            </div>
+        </div>
+    </div>
+</div>

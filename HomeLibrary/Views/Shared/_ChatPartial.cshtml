@@ -1,0 +1,110 @@
+﻿@model IEnumerable<HomeLibrary.Models.ViewModels.ChatViewModel>
+@using Microsoft.AspNet.Identity
+
+<div id="chat-section">
+    @if (Request.IsAuthenticated)
+    {
+        <div class="chat-container">
+            <div class="chat-top-space">Chat</div>
+            @foreach (var f in Model)
+            {
+                <div id="@f.FriendID" class="chat-friend-contact">
+                    <div class="friend-chat-avatar" style="background-image: url('@Url.Content("~/Images/" + f.PictureSource)" )')"></div>
+                    <div class="friend-chat-name-container">@f.Name</div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="chat-container">
+            <div class="chat-mask">
+            </div>
+            <div class="chat-top-space">You're not logged</div>
+            <div class="chat-friend-contact"></div>
+        </div>
+    }
+    <div id="bottom-container-chat" class="bottom-chat-container"></div>
+</div>
+
+<script src="~/Scripts/jquery.signalR-2.2.2.min.js"></script>
+<script src="~/signalr/hubs"></script>
+<script>
+    $(function () {
+        var chat = $.connection.chatHub;
+        chat.client.addNewMessageToPage = function (name, message) {
+            $('#discussion').append('<li><strong>' + htmlEncode(name)
+                + '</strong>: ' + htmlEncode(message) + '</li>');
+        };
+        chat.client.loadMessagesToView = function (messages, friendID, MyID) {
+            displayMessagesInWindow(messages, friendID, MyID);
+        };
+        chat.client.sendAsync = function (messages, receiverID, senderInfo) {
+            //displayMessagesOnSend(messages, receiverID, senderInfo);
+            var parameters = senderInfo.split(',');
+            var chatWin = document.getElementById(parameters[0] + 'W');
+            if (chatWin == null) {
+                CCW(senderInfo);
+                chat.server.loadMessages(parameters[0]);
+            }
+            else {
+                incomingMessage(messages, senderInfo);
+            }
+        };
+        $.connection.hub.start().done(function () {
+            $('.chat-friend-contact').click(function () {
+                var chatWindows = document.getElementsByClassName("chat-window");
+                var getId = this.id + "W";
+                var exist = false;
+
+                for (i = 0; i < chatWindows.length; i++) {
+                    var temp = chatWindows[i].id;
+                    if (temp == getId)
+                        exist = true;
+                }
+                if (!exist) {
+                    var profileID = chatWindowBuilder(this);
+                    chat.server.loadMessages(profileID);
+                    var node = document.getElementById("bottom-container-chat");
+                    var html = $('#bottom-container-chat').html();
+                    window.sessionStorage.setItem('content', html);
+                }
+            });
+            $('#bottom-container-chat').on("keypress", ".message-text-box", function (e) {
+                if (event.keyCode == 13 && !event.shiftKey) {
+                    e.preventDefault();
+                    var message = $(this).val();
+                    var friendID = $(this).parent().siblings(".chat-window-top").attr('id');
+                    $(this).val('');
+                    var tbName = $(this).attr('id');
+                    setCursor(tbName);
+                    addNewMessageToWindow(this, message);
+                    var messageListID = $(this).parent().siblings(".all-messages").children(".messages-list").attr("id");
+                    var messageList = document.getElementById(messageListID);
+                    messageList.scrollTop = messageList.scrollHeight;
+                    chat.server.sendPrivateMessage(friendID, message);
+                }
+            });
+        });
+    });
+    function htmlEncode(value) {
+        var encodedValue = $('<div />').text(value).html();
+        return encodedValue;
+    }
+</script>
+<script>
+    //var URL = '/Partials/ChatCurrent';
+
+    $(window).on("load", function () {
+        $('#bottom-container-chat').html(window.sessionStorage.getItem('content'));
+        var node = document.getElementsByClassName("messages-list");
+        for (i = 0; i < node.length; i++) {
+            var chatWindow = document.getElementById(node[i].id);
+            chatWindow.scrollTop = chatWindow.scrollHeight;
+        }
+    });
+
+</script>
+@*<div class="chat-window">
+        <div class="chat-window-top"></div>
+    </div>*@
